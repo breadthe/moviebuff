@@ -28,6 +28,19 @@ const mutations = {
       state.seenlist = JSON.parse(window.localStorage.getItem('seenlist')) || []
     }
   },
+  REMOVE_FROM_SEENLIST: (state, imdbID) => {
+    const seenlist = state.seenlist
+    // If the movie is in the seenlist, remove it
+    // seenlist.push(obj)
+    // window.localStorage.setItem('seenlist', JSON.stringify(seenlist))
+    // state.seenlist = JSON.parse(window.localStorage.getItem('seenlist')) || []
+    const ix = _.findIndex(seenlist, ['imdbID', imdbID])
+    if (ix >= 0) {
+      seenlist.splice(ix, 1)
+      window.localStorage.setItem('seenlist', JSON.stringify(seenlist))
+      state.seenlist = JSON.parse(window.localStorage.getItem('seenlist')) || []
+    }
+  },
 
   /* Wishlist */
   INIT_WISHLIST: (state, wishlist) => {
@@ -38,6 +51,16 @@ const mutations = {
     // If the movie is not in the wishlist, add it
     if (_.findIndex(wishlist, ['imdbID', movie.imdbID]) < 0) {
       wishlist.push(movie)
+      window.localStorage.setItem('wishlist', JSON.stringify(wishlist))
+      state.wishlist = JSON.parse(window.localStorage.getItem('wishlist')) || []
+    }
+  },
+  REMOVE_FROM_WISHLIST: (state, imdbID) => {
+    const wishlist = state.wishlist
+    // If the movie is in the wishlist, remove it
+    const ix = _.findIndex(wishlist, ['imdbID', imdbID])
+    if (ix >= 0) {
+      wishlist.splice(ix, 1)
       window.localStorage.setItem('wishlist', JSON.stringify(wishlist))
       state.wishlist = JSON.parse(window.localStorage.getItem('wishlist')) || []
     }
@@ -57,6 +80,9 @@ const actions = {
     commit('ADD_TO_SEENLIST', movie)
     commit('REMOVE_FROM_WISHLIST', movie.imdbID)
   },
+  removeFromSeenlist ({ commit }, imdbID) {
+    commit('REMOVE_FROM_SEENLIST', imdbID)
+  },
 
   /* Wishlist */
   initWishlist ({ commit }, wishlist) {
@@ -64,6 +90,9 @@ const actions = {
   },
   addToWishlist ({ commit }, movie) {
     commit('ADD_TO_WISHLIST', movie)
+  },
+  removeFromWishlist ({ commit }, imdbID) {
+    commit('REMOVE_FROM_WISHLIST', imdbID)
   }
 }
 
