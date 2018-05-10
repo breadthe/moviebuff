@@ -17,11 +17,17 @@
               <div class="movie-title">
                 {{movie.Title}} ({{movie.Year}})
                 <div class="action-buttons">
-                  <button class="button" :class="{'is-success': isInSeenlist(movie.imdbID)}" @click="addToSeenlist(movie)">
-                    <i class="fa" :class="{'fa-eye': isInSeenlist(movie.imdbID), 'fa-eye-slash': !isInSeenlist(movie.imdbID)}" aria-hidden="true"></i>&nbsp;Seen
+                  <button class="button" :class="{'is-success': isInSeenlist(movie.imdbID)}" @click="addToSeenlist(movie.imdbID)">
+                    <i class="fa"
+                      :class="{'fa-circle-o-notch fa-spin': addingToSeenlist === movie.imdbID, 'fa-eye': addingToSeenlist !== movie.imdbID && isInSeenlist(movie.imdbID), 'fa-eye-slash': addingToSeenlist !== movie.imdbID && !isInSeenlist(movie.imdbID)}"
+                      aria-hidden="true"
+                    ></i>&nbsp;Seen
                   </button>
-                  <button class="button" :class="{'is-warning': isInWishlist(movie.imdbID)}" @click="addToWishlist(movie)">
-                    <i class="fa" :class="{'fa-heart': isInWishlist(movie.imdbID), 'fa-heart-o': !isInWishlist(movie.imdbID)}" aria-hidden="true"></i>&nbsp;Wishlist
+                  <button class="button" :class="{'is-warning': isInWishlist(movie.imdbID)}" @click="addToWishlist(movie.imdbID)">
+                    <i class="fa"
+                      :class="{'fa-circle-o-notch fa-spin': addingToWishlist === movie.imdbID, 'fa-heart': addingToWishlist !== movie.imdbID && isInWishlist(movie.imdbID), 'fa-heart-o': addingToWishlist !== movie.imdbID && !isInWishlist(movie.imdbID)}"
+                      aria-hidden="true"
+                    ></i>&nbsp;Wishlist
                   </button>
                 </div>
               </div>
@@ -45,6 +51,7 @@ import store from '@/store'
 import axios from 'axios'
 import _ from 'lodash'
 import { mapState } from 'vuex'
+import config from '../../config'
 
 export default {
   name: 'SearchPage',
@@ -54,7 +61,9 @@ export default {
     return {
       searchString: '',
       searchResults: [],
-      totalResults: 0
+      totalResults: 0,
+      addingToSeenlist: false,
+      addingToWishlist: false
     }
   },
   methods: {
@@ -62,26 +71,42 @@ export default {
       await store.dispatch('toggleSearching', true)
       store.dispatch('toggleSearching', true)
       this.searchString = this.$route.query.q
-      const results = await axios.get('http://www.omdbapi.com/?i=tt3896198&apikey=1a10e7c5&type=movie&s=' + `${this.searchString}`)
+      const apikey = config.dev.API_KEY
+      const results = await axios.get('http://www.omdbapi.com/?&apikey=' + `${apikey}` + '&type=movie&s=' + `${this.searchString}`)
       await store.dispatch('toggleSearching', false)
       if (results.data) {
         this.totalResults = results.data.totalResults
         this.searchResults = results.data.Search
       }
     },
-    addToSeenlist: function (movie) {
-      store.dispatch('addToSeenlist', movie)
+    addToSeenlist: async function (imdbID) {
+      this.addingToSeenlist = imdbID
+      const movie = await this.getMovieDetails(imdbID)
+      if (movie) {
+        store.dispatch('addToSeenlist', movie)
+      }
+      this.addingToSeenlist = false
     },
     isInSeenlist: function (imdbID) {
       const ix = _.findIndex(this.seenlist, ['imdbID', imdbID])
       return ix > -1
     },
-    addToWishlist: function (movie) {
-      store.dispatch('addToWishlist', movie)
+    addToWishlist: async function (imdbID) {
+      this.addingToWishlist = imdbID
+      const movie = await this.getMovieDetails(imdbID)
+      if (movie) {
+        store.dispatch('addToWishlist', movie)
+      }
+      this.addingToWishlist = false
     },
     isInWishlist: function (imdbID) {
       const ix = _.findIndex(this.wishlist, ['imdbID', imdbID])
       return ix > -1
+    },
+    getMovieDetails: async function (imdbID) {
+      const apikey = config.dev.API_KEY
+      const results = await axios.get('http://www.omdbapi.com/?&apikey=' + `${apikey}` + '&type=movie&i=' + `${imdbID}`)
+      return results.data || false
     }
   },
   computed: {

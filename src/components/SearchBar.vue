@@ -5,8 +5,7 @@
       </div>
       <div class="control">
         <a class="button is-info" @click="searchMovie" :disabled="!searchString.length">
-          <i class="fa fa-circle-o-notch fa-spin fa-fw" v-if="isSearching"></i>
-          <i class="fa fa-search fa-fw" v-else></i>
+          <i class="fa fa-fw" :class="{'fa-circle-o-notch fa-spin': isSearching, 'fa-search': !isSearching}"></i>
         </a>
       </div>
 
