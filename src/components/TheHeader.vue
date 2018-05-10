@@ -9,13 +9,13 @@
                     <!-- </span> -->
                     <span class="site-name">MovieBuff</span>
                   </router-link>
-                  <div class="navbar-burger burger" :class="{'is-active': isMobile}" data-target="navbarExampleTransparentExample" @click="isMobile=!isMobile">
+                  <div class="navbar-burger burger" :class="{'is-active': burgerIsActive}" data-target="navbarExampleTransparentExample" @click="burgerIsActive=!burgerIsActive">
                     <span></span>
                     <span></span>
                     <span></span>
                   </div>
                 </div>
-                <div id="navbarExampleTransparentExample" class="navbar-menu" :class="{'is-active': isMobile}">
+                <div id="navbarExampleTransparentExample" class="navbar-menu" :class="{'is-active': burgerIsActive}">
                   <div class="navbar-start">
                     <router-link class="navbar-item" to="/seen" append>Seen</router-link>
                     <router-link class="navbar-item" to="/wishlist" append>Wishlist</router-link>
@@ -40,7 +40,12 @@ export default {
   },
   data () {
     return {
-      isMobile: false
+      burgerIsActive: false
+    }
+  },
+  watch: {
+    '$route' (to, from) {
+      this.burgerIsActive = false
     }
   }
 }
