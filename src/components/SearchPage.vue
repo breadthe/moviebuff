@@ -17,13 +17,22 @@
               <div class="movie-title">
                 {{movie.Title}} ({{movie.Year}})
                 <div class="action-buttons">
-                  <button class="button" :class="{'is-success': isInSeenlist(movie.imdbID)}" @click="addToSeenlist(movie.imdbID)">
+                  <button
+                    class="button"
+                    :class="{'is-success': isInSeenlist(movie.imdbID)}"
+                    @click="addToSeenlist(movie.imdbID)"
+                  >
                     <i class="fa"
                       :class="{'fa-circle-o-notch fa-spin': addingToSeenlist === movie.imdbID, 'fa-eye': addingToSeenlist !== movie.imdbID && isInSeenlist(movie.imdbID), 'fa-eye-slash': addingToSeenlist !== movie.imdbID && !isInSeenlist(movie.imdbID)}"
                       aria-hidden="true"
                     ></i>&nbsp;Seen
                   </button>
-                  <button class="button" :class="{'is-warning': isInWishlist(movie.imdbID)}" @click="addToWishlist(movie.imdbID)">
+                  <button
+                    v-if="!isInSeenlist(movie.imdbID)"
+                    class="button"
+                    :class="{'is-warning': isInWishlist(movie.imdbID)}"
+                    @click="addToWishlist(movie.imdbID)"
+                  >
                     <i class="fa"
                       :class="{'fa-circle-o-notch fa-spin': addingToWishlist === movie.imdbID, 'fa-heart': addingToWishlist !== movie.imdbID && isInWishlist(movie.imdbID), 'fa-heart-o': addingToWishlist !== movie.imdbID && !isInWishlist(movie.imdbID)}"
                       aria-hidden="true"
