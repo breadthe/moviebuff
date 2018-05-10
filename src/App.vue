@@ -18,6 +18,15 @@ export default {
   name: 'App',
   components: {
     'the-header': TheHeader
+  },
+  data: function () {
+    return {
+      changingRoute: false
+    }
+  },
+  mounted: async function () {
+    await store.dispatch('initSeenlist', JSON.parse(window.localStorage.getItem('seenlist')) || [])
+    await store.dispatch('initWishlist', JSON.parse(window.localStorage.getItem('wishlist')) || [])
   }
 }
 </script>

@@ -5,3 +5,46 @@ h1, h2 {
         font-weight: normal;
     }
 }
+
+.navbar-item {
+    .fa-film {
+        color: black;
+    }
+}
+.site-name {
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+}
+
+/* Search Results */
+
+.movie-results {
+    width: 100%;
+    position: relative;
+    .movie-item {
+        width: 100%;
+        display: table;
+        margin-bottom: 20px;
+        .movie-title {
+            display: table-cell;
+            padding-left: 10px;
+            font-size: 20px;
+            vertical-align: top;
+        }
+        .movie-poster {
+            display: table-cell;
+            width: 100px;
+            height: 100px;
+            img {
+                max-height: 100px;
+                max-width: 100px;
+            }
+        }
+        .action-buttons {
+            margin-top: 10px;
+            // display: table-cell;
+            // text-align: right;
+        }
+    }
+}
