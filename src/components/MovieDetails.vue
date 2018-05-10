@@ -17,7 +17,6 @@
                   <p>{{movie.Runtime}}</p>
                   <p>{{movie.Genre}}</p>
                   <br>
-                  <p><strong>Released:</strong> {{movie.Released}}</p>
                   <p><strong>Cast:</strong> {{movie.Actors}}</p>
                   <br>
                   <p>{{movie.Plot}}</p>

@@ -20,7 +20,7 @@
                   <button
                     class="button"
                     :class="{'is-success': isInSeenlist(movie.imdbID)}"
-                    @click="addToSeenlist(movie.imdbID)"
+                    @click="openSeenDetails(movie.imdbID)"
                   >
                     <i class="fa"
                       :class="{'fa-circle-o-notch fa-spin': addingToSeenlist === movie.imdbID, 'fa-eye': addingToSeenlist !== movie.imdbID && isInSeenlist(movie.imdbID), 'fa-eye-slash': addingToSeenlist !== movie.imdbID && !isInSeenlist(movie.imdbID)}"
@@ -52,6 +52,9 @@
       </div>
 
     </div>
+
+    <seen-details :seen-movie="seenMovie" :seen-details-is-open="seenDetailsIsOpen" @closeSeenDetails="closeSeenDetails()"></seen-details>
+
   </section>
 </template>
 
@@ -61,16 +64,20 @@ import axios from 'axios'
 import _ from 'lodash'
 import { mapState } from 'vuex'
 import config from '../../config'
+import SeenDetails from '@/components/SeenDetails'
 
 export default {
   name: 'SearchPage',
   components: {
+    'seen-details': SeenDetails
   },
   data () {
     return {
       searchString: '',
       searchResults: [],
       totalResults: 0,
+      seenMovie: {},
+      seenDetailsIsOpen: false,
       addingToSeenlist: false,
       addingToWishlist: false
     }
@@ -87,6 +94,17 @@ export default {
         this.totalResults = results.data.totalResults
         this.searchResults = results.data.Search
       }
+    },
+    openSeenDetails: async function (imdbID) {
+        const movie = await this.getMovieDetails(imdbID)
+        if (movie) {
+          this.seenMovie = movie
+          this.seenDetailsIsOpen = true
+        }
+    },
+    closeSeenDetails: function () {
+      this.seenMovie = {}
+      this.seenDetailsIsOpen = false
     },
     addToSeenlist: async function (imdbID) {
       this.addingToSeenlist = imdbID
