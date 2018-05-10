@@ -7,7 +7,7 @@
                     <!-- <span class="icon"> -->
                       <i class="fa fa-film fa-2x" aria-hidden="true"></i>&nbsp;
                     <!-- </span> -->
-                    <span class="site-name">Movie Buff</span>
+                    <span class="site-name">MovieBuff</span>
                   </router-link>
                   <div class="navbar-burger burger" :class="{'is-active': isMobile}" data-target="navbarExampleTransparentExample" @click="isMobile=!isMobile">
                     <span></span>

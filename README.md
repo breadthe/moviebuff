@@ -25,3 +25,16 @@ npm test
 ```
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+## Surge
+Publish to Surge.sh. In `public` folder create file named `CNAME` and put in the desired domain, in this case `moviebuff.surge.sh`.
+
+Run the build task
+``` bash
+yarn run build
+```
+
+Then deploy to Surge.
+``` bash
+surge ./dist --domain moviebuff.surge.sh
+```
