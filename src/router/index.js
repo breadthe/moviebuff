@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
+import DashboardPage from '@/components/DashboardPage'
+import SeenPage from '@/components/SeenPage'
+import WishlistPage from '@/components/WishlistPage'
+import SearchPage from '@/components/SearchPage'
 
 Vue.use(Router)
 
@@ -8,8 +11,23 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
+      name: 'Dashboard',
+      component: DashboardPage
+    },
+    {
+      path: '/seen',
+      name: 'Seen',
+      component: SeenPage
+    },
+    {
+      path: '/wishlist',
+      name: 'Wishlist',
+      component: WishlistPage
+    },
+    {
+      path: '/search',
+      name: 'Search',
+      component: SearchPage
     }
   ]
 })
