@@ -1,23 +1,27 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
-  </div>
+    <div id="app">
+            <the-header></the-header>
+
+            <div class="container is-fluid">
+              <router-view></router-view>
+            </div>
+
+            <!--<the-footer></the-footer>-->
+    </div>
 </template>
 
 <script>
+import TheHeader from '@/components/TheHeader'
+import store from '@/store'
+
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+    'the-header': TheHeader
+  }
 }
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="sass">
+    @import "./assets/index"
 </style>
