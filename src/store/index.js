@@ -31,9 +31,6 @@ const mutations = {
   REMOVE_FROM_SEENLIST: (state, imdbID) => {
     const seenlist = state.seenlist
     // If the movie is in the seenlist, remove it
-    // seenlist.push(obj)
-    // window.localStorage.setItem('seenlist', JSON.stringify(seenlist))
-    // state.seenlist = JSON.parse(window.localStorage.getItem('seenlist')) || []
     const ix = _.findIndex(seenlist, ['imdbID', imdbID])
     if (ix >= 0) {
       seenlist.splice(ix, 1)
@@ -52,6 +49,19 @@ const mutations = {
     if (_.findIndex(wishlist, ['imdbID', movie.imdbID]) < 0) {
       wishlist.push(movie)
       window.localStorage.setItem('wishlist', JSON.stringify(wishlist))
+      state.wishlist = JSON.parse(window.localStorage.getItem('wishlist')) || []
+    }
+  },
+  MOVE_TO_SEENLIST: (state, imdbID) => {
+    const wishlist = state.wishlist
+    const seenlist = state.seenlist
+    const ix = _.findIndex(wishlist, ['imdbID', imdbID])
+    if (ix >= 0) {
+      seenlist.push(wishlist[ix]) // add it to the seenlist
+      wishlist.splice(ix, 1) // remove it from the wishlist
+      window.localStorage.setItem('seenlist', JSON.stringify(seenlist))
+      window.localStorage.setItem('wishlist', JSON.stringify(wishlist))
+      state.seenlist = JSON.parse(window.localStorage.getItem('seenlist')) || []
       state.wishlist = JSON.parse(window.localStorage.getItem('wishlist')) || []
     }
   },
@@ -91,6 +101,9 @@ const actions = {
   addToWishlist ({ commit }, movie) {
     commit('ADD_TO_WISHLIST', movie)
   },
+  moveToSeenlist ({ commit }, imdbID) {
+    commit('MOVE_TO_SEENLIST', imdbID)
+  },
   removeFromWishlist ({ commit }, imdbID) {
     commit('REMOVE_FROM_WISHLIST', imdbID)
   }
@@ -99,7 +112,8 @@ const actions = {
 const getters = {
   searching: (state) => { return state.searching || false },
   seenlist: (state) => { return state.seenlist || [] },
-  wishlist: (state) => { return state.wishlist || [] }
+  wishlist: (state) => { return state.wishlist || [] },
+  wishlistMovie: (state, imdbID) => { return state.wishlist.filter(movie => movie.imdbID === imdbID) || [] }
 }
 
 export default new Vuex.Store({

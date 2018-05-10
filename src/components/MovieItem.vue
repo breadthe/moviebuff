@@ -2,7 +2,7 @@
   <div class="movie-item">
       <div class="movie-controls">
         <div v-if="isWishlist">
-          <button class="button is-success" @click="addToSeenlist(movie)">
+          <button class="button is-success" @click="moveToSeenlist(movie.imdbID)">
             <i class="fa fa-eye" aria-hidden="true"></i>&nbsp;Seen
           </button>
           <!-- <button class="button is-danger" @click="removeFromWishlist(movie.imdbID)"> -->
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-// import store from '@/store'
+import store from '@/store'
 
 export default {
   name: 'MovieItem',
@@ -44,6 +44,11 @@ export default {
     }
   },
   methods: {
+    moveToSeenlist: function (imdbID) {
+      // if (this.isInWishlist(imdbID)) {
+      store.dispatch('moveToSeenlist', imdbID)
+      // }
+    },
     removeFromWishlist: function (imdbID) {
       this.$emit('removeFromWishlist', this.movie.imdbID)
     },

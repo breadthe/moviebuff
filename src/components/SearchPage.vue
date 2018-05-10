@@ -90,9 +90,14 @@ export default {
     },
     addToSeenlist: async function (imdbID) {
       this.addingToSeenlist = imdbID
-      const movie = await this.getMovieDetails(imdbID)
-      if (movie) {
-        store.dispatch('addToSeenlist', movie)
+      // First check if this movie is already in the wishlist, in which case I want to move the object over to the seenlist
+      if (this.isInWishlist(imdbID)) {
+        store.dispatch('moveToSeenlist', imdbID)
+      } else { // If it's not in the wishlist, make a request to get the full movie details
+        const movie = await this.getMovieDetails(imdbID)
+        if (movie) {
+          store.dispatch('addToSeenlist', movie)
+        }
       }
       this.addingToSeenlist = false
     },
