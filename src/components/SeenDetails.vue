@@ -5,7 +5,7 @@
 
       <header class="modal-card-head">
         <p class="modal-card-title">{{seenMovie.Title}} <small>({{seenMovie.Year}})</small></p>
-        <button class="delete" aria-label="close"></button>
+        <button class="delete" aria-label="close" @click="$emit('closeSeenDetails')"></button>
       </header>
 
       <section class="modal-card-body">
@@ -36,7 +36,12 @@
                   </div>
                 </div>
 
-                <div class="field">
+                <div class="field has-addons has-addons-left">
+                  <div class="control">
+                    <a class="button is-static">
+                      $
+                    </a>
+                  </div>
                   <div class="control">
                     <input class="input" type="text" placeholder="Ticket price" v-model="meta.ticketPrice">
                   </div>
@@ -46,16 +51,8 @@
                   <div class="control">
                     <label class="radio">
                       MoviePass?
-                      <toggle-button v-model="meta.isMoviePass"></toggle-button>
+                      <toggle-button v-model="meta.isMoviePass" :value="meta.isMoviePass" :sync="true"></toggle-button>
                     </label>
-                    <!-- <label class="radio">
-                      <input type="radio" name="isMoviePass" :value="meta.isMoviePass" v-model="meta.isMoviePass">
-                      Yes
-                    </label>
-                    <label class="radio">
-                      <input type="radio" name="isMoviePass" :value="meta.isMoviePass" v-model="meta.isMoviePass" checked="checked">
-                      No
-                    </label> -->
                   </div>
                 </div>
 
@@ -65,17 +62,15 @@
       </section>
 
       <footer class="modal-card-foot">
-        <button class="button is-success">Save changes</button>
-        <button class="button">Cancel</button>
+        <button class="button is-success" @click="saveToSeenlist()"><i class="fa fa-eye"></i>&nbsp;Save</button>
+        <button class="button" @click="$emit('closeSeenDetails')">Cancel</button>
       </footer>
 
     </div>
-    <button class="modal-close is-large" aria-label="close" @click="$emit('closeSeenDetails')"></button>
   </div>
 </template>
 
 <script>
-// import store from '@/store'
 import moment from 'moment'
 
 export default {
@@ -96,14 +91,25 @@ export default {
     return {
       meta: {
         theater: '',
-        date: '',
-        showTime: '',
+        date: moment().format('MMMM D YYYY'),
+        showTime: moment().format('h:mm:ss a'),
         ticketPrice: '',
         isMoviePass: false
       }
     }
   },
   methods: {
+    saveToSeenlist: function () {
+      const movie = Object.assign(this.seenMovie, {meta: this.meta})
+      this.meta = {
+        theater: '',
+        date: moment().format('MMMM D YYYY'),
+        showTime: moment().format('h:mm:ss a'),
+        ticketPrice: '',
+        isMoviePass: false
+      }
+      this.$emit('addToSeenlist', movie)
+    }
   }
 }
 </script>

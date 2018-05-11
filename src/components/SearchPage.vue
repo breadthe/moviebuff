@@ -53,7 +53,12 @@
 
     </div>
 
-    <seen-details :seen-movie="seenMovie" :seen-details-is-open="seenDetailsIsOpen" @closeSeenDetails="closeSeenDetails()"></seen-details>
+    <seen-details
+      :seen-movie="seenMovie"
+      :seen-details-is-open="seenDetailsIsOpen"
+      @closeSeenDetails="closeSeenDetails()"
+      @addToSeenlist="addToSeenlist($event)"
+    ></seen-details>
 
   </section>
 </template>
@@ -96,28 +101,21 @@ export default {
       }
     },
     openSeenDetails: async function (imdbID) {
-        const movie = await this.getMovieDetails(imdbID)
-        if (movie) {
-          this.seenMovie = movie
-          this.seenDetailsIsOpen = true
-        }
+      this.addingToSeenlist = imdbID
+      const movie = await this.getMovieDetails(imdbID)
+      if (movie) {
+        this.seenMovie = movie
+        this.seenDetailsIsOpen = true
+      }
+      this.addingToSeenlist = false
     },
     closeSeenDetails: function () {
       this.seenMovie = {}
       this.seenDetailsIsOpen = false
     },
-    addToSeenlist: async function (imdbID) {
-      this.addingToSeenlist = imdbID
-      // First check if this movie is already in the wishlist, in which case I want to move the object over to the seenlist
-      if (this.isInWishlist(imdbID)) {
-        store.dispatch('moveToSeenlist', imdbID)
-      } else { // If it's not in the wishlist, make a request to get the full movie details
-        const movie = await this.getMovieDetails(imdbID)
-        if (movie) {
-          store.dispatch('addToSeenlist', movie)
-        }
-      }
-      this.addingToSeenlist = false
+    addToSeenlist: async function (movie) {
+      store.dispatch('addToSeenlist', movie)
+      this.closeSeenDetails()
     },
     isInSeenlist: function (imdbID) {
       const ix = _.findIndex(this.seenlist, ['imdbID', imdbID])
