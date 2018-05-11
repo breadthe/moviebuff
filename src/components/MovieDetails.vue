@@ -58,7 +58,7 @@ export default {
   },
   methods: {
     formatDate: function (dateString) {
-      return moment(dateString).format('MMMM Do YYYY')
+      return moment(new Date(dateString)).format('MMMM Do YYYY')
     }
   }
 }
