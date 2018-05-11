@@ -20,6 +20,13 @@
                   <p><strong>Cast:</strong> {{movie.Actors}}</p>
                   <br>
                   <p>{{movie.Plot}}</p>
+                  <section v-if="movie.meta">
+                    <hr>
+                    <p v-if="movie.meta.theater"><strong>Theater:</strong> {{movie.meta.theater}}</p>
+                    <p v-if="movie.meta.date"><strong>Seen on:</strong> {{formatDate(movie.meta.date)}} <span v-if="movie.meta.showTime"><strong>at</strong> {{movie.meta.showTime}}</span></p>
+                    <p v-if="movie.meta.ticketPrice"><strong>Ticket price:</strong> ${{movie.meta.ticketPrice}}</p>
+                    <p v-if="movie.meta.isMoviePass"><span class="tag is-danger">MoviePass</span></p>
+                  </section>
                 </div>
               </div>
             </div>
@@ -31,7 +38,7 @@
 </template>
 
 <script>
-// import store from '@/store'
+import moment from 'moment'
 
 export default {
   name: 'MovieDetails',
@@ -50,6 +57,9 @@ export default {
     }
   },
   methods: {
+    formatDate: function (dateString) {
+      return moment(dateString).format('MMMM Do YYYY')
+    }
   }
 }
 </script>
