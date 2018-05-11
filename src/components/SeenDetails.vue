@@ -5,7 +5,7 @@
 
       <header class="modal-card-head">
         <p class="modal-card-title">{{seenMovie.Title}} <small>({{seenMovie.Year}})</small></p>
-        <button class="delete" aria-label="close" @click="$emit('closeSeenDetails')"></button>
+        <button class="delete" aria-label="close" @click="closeSeenDetails()"></button>
       </header>
 
       <section class="modal-card-body">
@@ -26,7 +26,7 @@
 
                 <div class="field">
                   <div class="control">
-                    <input class="input" type="text" placeholder="Viewing date" v-model="meta.date">
+                    <datepicker v-model="meta.date" :value="meta.date" :monday-first="true" :input-class="`input`" name="viewingDate"></datepicker>
                   </div>
                 </div>
 
@@ -56,6 +56,12 @@
                   </div>
                 </div>
 
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+
               </div>
             </div>
           </article>
@@ -63,7 +69,7 @@
 
       <footer class="modal-card-foot">
         <button class="button is-success" @click="saveToSeenlist()"><i class="fa fa-eye"></i>&nbsp;Save</button>
-        <button class="button" @click="$emit('closeSeenDetails')">Cancel</button>
+        <button class="button" @click="closeSeenDetails()">Cancel</button>
       </footer>
 
     </div>
@@ -72,10 +78,12 @@
 
 <script>
 import moment from 'moment'
+import Datepicker from 'vuejs-datepicker'
 
 export default {
   name: 'SeenDetails',
   components: {
+    Datepicker
   },
   props: {
     'seen-movie': {
@@ -101,6 +109,14 @@ export default {
   methods: {
     saveToSeenlist: function () {
       const movie = Object.assign(this.seenMovie, {meta: this.meta})
+      this.resetMetadata()
+      this.$emit('addToSeenlist', movie)
+    },
+    closeSeenDetails: function () {
+      this.resetMetadata()
+      this.$emit('closeSeenDetails')
+    },
+    resetMetadata: function () {
       this.meta = {
         theater: '',
         date: moment().format('MMMM D YYYY'),
@@ -108,7 +124,6 @@ export default {
         ticketPrice: '',
         isMoviePass: false
       }
-      this.$emit('addToSeenlist', movie)
     }
   }
 }
