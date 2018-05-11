@@ -126,7 +126,6 @@ export default {
       this.meta = {
         theater: '',
         date: moment().format('MMMM D YYYY'),
-        // showTime: moment().format('h:mm:ss a'),
         showTime: {
           hh: moment().format('h'),
           mm: moment().format('mm'),
