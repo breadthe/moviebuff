@@ -5,8 +5,10 @@ import App from './App'
 import router from './router'
 import store from './store'
 import ToggleButton from 'vue-js-toggle-button'
+import environment from '../config/environment'
 
 Vue.config.productionTip = false
+Vue.config.ENV = environment
 
 Vue.use(ToggleButton)
 

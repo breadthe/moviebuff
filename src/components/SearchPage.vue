@@ -65,11 +65,11 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import store from '@/store'
 import axios from 'axios'
 import _ from 'lodash'
 import { mapState } from 'vuex'
-import config from '../../config'
 import SeenDetails from '@/components/SeenDetails'
 
 export default {
@@ -85,7 +85,8 @@ export default {
       seenMovie: {},
       seenDetailsIsOpen: false,
       addingToSeenlist: false,
-      addingToWishlist: false
+      addingToWishlist: false,
+      apikey: Vue.config.ENV.OMDB_API_KEY
     }
   },
   methods: {
@@ -93,8 +94,7 @@ export default {
       await store.dispatch('toggleSearching', true)
       store.dispatch('toggleSearching', true)
       this.searchString = this.$route.query.q
-      const apikey = config.dev.API_KEY
-      const results = await axios.get('http://www.omdbapi.com/?&apikey=' + `${apikey}` + '&type=movie&s=' + `${this.searchString}`)
+      const results = await axios.get('http://www.omdbapi.com/?&apikey=' + `${this.apikey}` + '&type=movie&s=' + `${this.searchString}`)
       await store.dispatch('toggleSearching', false)
       if (results.data) {
         this.totalResults = results.data.totalResults
@@ -135,8 +135,7 @@ export default {
       return ix > -1
     },
     getMovieDetails: async function (imdbID) {
-      const apikey = config.dev.API_KEY
-      const results = await axios.get('http://www.omdbapi.com/?&apikey=' + `${apikey}` + '&type=movie&i=' + `${imdbID}`)
+      const results = await axios.get('http://www.omdbapi.com/?&apikey=' + `${this.apikey}` + '&type=movie&i=' + `${imdbID}`)
       return results.data || false
     }
   },
