@@ -2,7 +2,7 @@
   <div class="movie-item">
       <div class="movie-controls">
         <div v-if="isWishlist">
-          <button class="button" @click="seenDetailsIsOpen = true">
+          <button class="button" @click="openSeenDetails(movie.imdbID)">
             <i class="fa fa-eye" aria-hidden="true"></i>&nbsp;Seen
           </button>
           <button class="button is-danger" @click="removeFromWishlist(movie.imdbID)">
@@ -25,18 +25,10 @@
 
       <movie-details :movie="movie" :details-is-open="detailsIsOpen" @closeDetails="detailsIsOpen = false"></movie-details>
 
-      <seen-details
-        :seen-movie="movie"
-        :seen-details-is-open="seenDetailsIsOpen"
-        @closeSeenDetails="seenDetailsIsOpen = false"
-        @addToSeenlist="addToSeenlist($event)"
-      ></seen-details>
-
   </div>
 </template>
 
 <script>
-import store from '@/store'
 import MovieDetails from '@/components/MovieDetails'
 import SeenDetails from '@/components/SeenDetails'
 
@@ -58,14 +50,12 @@ export default {
   },
   data: function () {
     return {
-      detailsIsOpen: false,
-      seenDetailsIsOpen: false
+      detailsIsOpen: false
     }
   },
   methods: {
-    addToSeenlist: async function (movie) {
-      store.dispatch('addToSeenlist', movie)
-      this.closeSeenDetails()
+    openSeenDetails: function (imdbID) {
+      this.$emit('openSeenDetails', imdbID)
     },
     removeFromWishlist: function (imdbID) {
       this.$emit('removeFromWishlist', this.movie.imdbID)
