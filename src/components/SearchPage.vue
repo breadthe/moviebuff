@@ -20,6 +20,7 @@
                   <button
                     class="button"
                     :class="{'is-success': isInSeenlist(movie.imdbID)}"
+                    :disabled="isInSeenlist(movie.imdbID)"
                     @click="openSeenDetails(movie.imdbID)"
                   >
                     <i class="fa"
