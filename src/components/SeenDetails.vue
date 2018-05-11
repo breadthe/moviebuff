@@ -124,16 +124,13 @@ export default {
         ticketPrice: '',
         isMoviePass: false
       }
-    },
-    getAddressData: function (addressData, placeResultData, id) {
-      console.log(addressData)
-    },
+    }
   },
   mounted: function () {
     const _this = this
-    const input = document.getElementById('theater'); 
-    const autocomplete = new google.maps.places.Autocomplete(input);
-    autocomplete.addListener('place_changed', function() { 
+    const input = document.getElementById('theater')
+    const autocomplete = new google.maps.places.Autocomplete(input)
+    autocomplete.addListener('place_changed', function () {
       var place = autocomplete.getPlace()
       _this.meta.theater = place.name
     })
