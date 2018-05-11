@@ -23,6 +23,15 @@ h1, h2 {
     }
 }
 
+/* Dashboard */
+
+.dashboard {
+    .tags {
+        display: inline-flex;
+        margin-right: 10px;
+    }
+}
+
 /* Search Results */
 
 .movie-results {
