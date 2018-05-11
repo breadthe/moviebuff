@@ -28,6 +28,7 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 
 ## Config
 Copy `config/environment.default.js` -> `config/environment.js` and add your API keys.
+Copy `index.default.html` -> `index.html` and add your Google Places API key.
 
 ## Surge
 Publish to Surge.sh. In `public` folder create file named `CNAME` and put in the desired domain, in this case `moviebuff.surge.sh`.
