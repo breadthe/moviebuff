@@ -23,7 +23,7 @@
                   <section v-if="movie.meta">
                     <hr>
                     <p v-if="movie.meta.theater"><strong>Theater:</strong> {{movie.meta.theater}}</p>
-                    <p v-if="movie.meta.date"><strong>Seen on:</strong> {{formatDate(movie.meta.date)}} <span v-if="movie.meta.showTime"><strong>at</strong> {{movie.meta.showTime}}</span></p>
+                    <p v-if="movie.meta.date"><strong>Seen on:</strong> {{formatDate(movie.meta.date)}} <span v-if="movie.meta.showTime"><strong>at</strong> {{formatTime(movie.meta.showTime)}}</span></p>
                     <p v-if="movie.meta.ticketPrice"><strong>Ticket price:</strong> ${{movie.meta.ticketPrice}}</p>
                     <p v-if="movie.meta.isMoviePass"><span class="tag is-danger">MoviePass</span></p>
                   </section>
@@ -59,6 +59,19 @@ export default {
   methods: {
     formatDate: function (dateString) {
       return moment(new Date(dateString)).format('MMMM Do YYYY')
+    },
+    formatTime: function (showTime) {
+      let timeStr = ''
+      if (showTime.hh) {
+        timeStr += showTime.hh
+      }
+      if (showTime.mm) {
+        timeStr += ':' + showTime.mm
+      }
+      if (showTime.a) {
+        timeStr += ' ' + showTime.a
+      }
+      return timeStr
     }
   }
 }

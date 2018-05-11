@@ -32,7 +32,7 @@
 
                 <div class="field">
                   <div class="control">
-                    <input class="input" type="text" placeholder="Show time" v-model="meta.showTime">
+                    <vue-timepicker format="hh:mm A" v-model="meta.showTime"></vue-timepicker>
                   </div>
                 </div>
 
@@ -79,11 +79,13 @@
 <script>
 import moment from 'moment'
 import Datepicker from 'vuejs-datepicker'
+import VueTimepicker from 'vue2-timepicker'
 
 export default {
   name: 'SeenDetails',
   components: {
-    Datepicker
+    Datepicker,
+    VueTimepicker
   },
   props: {
     'seen-movie': {
@@ -100,7 +102,11 @@ export default {
       meta: {
         theater: '',
         date: moment().format('MMMM D YYYY'),
-        showTime: moment().format('h:mm:ss a'),
+        showTime: {
+          hh: moment().format('h'),
+          mm: moment().format('mm'),
+          a: moment().format('a')
+        },
         ticketPrice: '',
         isMoviePass: false
       }
@@ -120,7 +126,11 @@ export default {
       this.meta = {
         theater: '',
         date: moment().format('MMMM D YYYY'),
-        showTime: moment().format('h:mm:ss a'),
+        showTime: {
+          hh: moment().format('h'),
+          mm: moment().format('mm'),
+          a: moment().format('a')
+        },
         ticketPrice: '',
         isMoviePass: false
       }
