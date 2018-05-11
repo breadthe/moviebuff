@@ -1,7 +1,7 @@
 <template>
   <div>
     <section class="section">
-      <h1 class="title is-1">Wishlist</h1>
+      <h1 class="title is-2">Wishlist</h1>
     </section>
     <section class="container movie-grid" v-if="wishlist.length">
       <movie-item

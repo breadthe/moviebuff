@@ -32,8 +32,7 @@
 
                 <div class="field">
                   <div class="control">
-                    <vue-timepicker class="input" format="hh:mm A" v-model="meta.showTime"></vue-timepicker>
-                    <!-- <input class="input" type="text" placeholder="Show time" v-model="meta.showTime"> -->
+                    <vue-timepicker format="hh:mm A" v-model="meta.showTime"></vue-timepicker>
                   </div>
                 </div>
 
@@ -103,7 +102,6 @@ export default {
       meta: {
         theater: '',
         date: moment().format('MMMM D YYYY'),
-        // showTime: moment().format('h:mm:ss a'),
         showTime: {
           hh: moment().format('h'),
           mm: moment().format('mm'),
