@@ -7,7 +7,18 @@
 
       <div class="column">
         <div class="movie-results" v-if="searchResults">
-            {{totalResults}} results
+            <div>
+              Showing <strong>{{resultsRange.from}}</strong>-<strong>{{resultsRange.to}}</strong> of <strong>{{totalResults}}</strong> total results for <strong>"{{searchString}}"</strong>
+            </div>
+            <div class="pagination-wrapper" v-if="numberOfPages > 1">
+              <router-link class="button is-light" :class="{'is-static': page === 1}" :disabled="page === 1" :to="previousPage" append>
+                <i class="fa fa-arrow-left"></i>
+              </router-link>
+              &nbsp;
+              <router-link class="button is-light" :class="{'is-static': page === numberOfPages}" :disabled="page === numberOfPages" :to="nextPage" append>
+                <i class="fa fa-arrow-right"></i>
+              </router-link>
+            </div>
             <hr>
             <div v-for="movie in searchResults" :key="movie.imdbID" class="movie-item">
               <div class="movie-poster">
@@ -45,7 +56,7 @@
         </div>
 
         <div v-else>
-          No results for "{{searchString}}"
+          No results for <strong>"{{searchString}}"</strong>
         </div>
       </div>
 
@@ -82,6 +93,9 @@ export default {
       searchString: '',
       searchResults: [],
       totalResults: 0,
+      resultsPerPage: 10,
+      numberOfPages: 0,
+      page: 1,
       seenMovie: {},
       seenDetailsIsOpen: false,
       addingToSeenlist: false,
@@ -94,10 +108,12 @@ export default {
       await store.dispatch('toggleSearching', true)
       store.dispatch('toggleSearching', true)
       this.searchString = this.$route.query.q
-      const results = await axios.get('http://www.omdbapi.com/?&apikey=' + `${this.apikey}` + '&type=movie&s=' + `${this.searchString}`)
+      this.page = parseInt(this.$route.query.page || 1, 10)
+      const results = await axios.get('http://www.omdbapi.com/?&apikey=' + `${this.apikey}` + '&type=movie&s=' + `${this.searchString}` + '&page=' + `${this.page}`)
       await store.dispatch('toggleSearching', false)
       if (results.data) {
         this.totalResults = results.data.totalResults
+        this.numberOfPages = parseInt(Math.ceil(this.totalResults / this.resultsPerPage), 10)
         this.searchResults = results.data.Search
       }
     },
@@ -140,7 +156,32 @@ export default {
     }
   },
   computed: {
-    ...mapState(['seenlist', 'wishlist'])
+    ...mapState(['seenlist', 'wishlist']),
+    resultsRange: function () {
+      let from, to
+      from = this.page === 1 ? 1 : Math.floor((this.page - 1) * this.resultsPerPage + 1)
+      to = this.page === this.numberOfPages ? this.totalResults : this.page * this.resultsPerPage
+      return {
+        from: from,
+        to: to
+      }
+    },
+    previousPage: function () {
+      let previousPage = this.page
+      previousPage--
+      if (previousPage < 1) {
+        return '/search?q=' + `${this.searchString}` + '&page=1'
+      }
+      return '/search?q=' + `${this.searchString}` + '&page=' + previousPage
+    },
+    nextPage: function () {
+      let nextPage = this.page
+      nextPage++
+      if (nextPage > this.numberOfPages) {
+        return '/search?q=' + `${this.searchString}` + '&page=' + this.numberOfPages
+      }
+      return '/search?q=' + `${this.searchString}` + '&page=' + nextPage
+    }
   },
   created: function () {
     this.searchMovie()

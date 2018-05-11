@@ -28,6 +28,9 @@ h1, h2 {
 .movie-results {
     width: 100%;
     position: relative;
+    .pagination-wrapper {
+        margin-top: 10px;
+    }
     .movie-item {
         width: 100%;
         display: table;
