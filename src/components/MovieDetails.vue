@@ -11,16 +11,18 @@
                     <section class="content">
                       <img :src="movie.Poster" :alt="movie.Title">
                     </section>
-                    <section class="content">
-                      <p class="is-size-7"><strong>IMDB Rating:</strong> {{movie.imdbRating}}</p>
-                      <p class="is-size-7"><strong>Metascore:</strong> {{movie.Metascore}}</p>
+                    <section class="content ratings">
+                      <div class="is-size-7"><strong>IMDB Rating:</strong> {{movie.imdbRating}}</div>
+                      <div class="is-size-7"><strong>Metascore:</strong> {{movie.Metascore}}</div>
                     </section>
                   </figure>
                 </div>
                 <div class="media-content">
                   <p><span class="title is-4 has-text-black">{{movie.Title}}</span> <span class="is-7 has-text-grey">({{movie.Year}})</span></p>
                   <p>{{movie.Runtime}}</p>
-                  <p>{{movie.Genre}}</p>
+                  <div class="tags has-addons" v-for="(genre, i) in genres" :key="'s' + i" v-if="genres.length">
+                      <span class="tag is-warning">{{genre}}</span>
+                  </div>
                   <br>
                   <p><strong>Cast:</strong> {{movie.Actors}}</p>
                   <br>
@@ -44,6 +46,7 @@
 
 <script>
 import moment from 'moment'
+import { getMovieGenres } from '@/utils'
 
 export default {
   name: 'MovieDetails',
@@ -77,6 +80,11 @@ export default {
         timeStr += ' ' + showTime.a
       }
       return timeStr
+    }
+  },
+  computed: {
+    genres: function () {
+      return getMovieGenres(this.movie)
     }
   }
 }

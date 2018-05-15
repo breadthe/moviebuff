@@ -23,9 +23,10 @@ h1, h2 {
     }
 }
 
-/* Dashboard */
+/* Dashboard, Movie Details */
 
-.dashboard {
+.dashboard,
+.movie-details {
     .tags {
         display: inline-flex;
         margin-right: 10px;
@@ -113,5 +114,9 @@ h1, h2 {
 }
 
 /* Movie Details */
+
 .movie-details {
+    .card {
+        min-height: 50vh;
+    }
 }

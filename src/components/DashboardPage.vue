@@ -23,7 +23,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import _ from 'lodash'
+import { getMovieListGenres } from '@/utils'
 
 export default {
   name: 'Dashboard',
@@ -33,29 +33,14 @@ export default {
     }
   },
   methods: {
-    getGenres: function (list) {
-      let genres = []
-      _.each(list, (movie) => {
-        const tmpgenres = movie.Genre.split(', ')
-        _.each(tmpgenres, (genre) => {
-          const ix = _.findIndex(genres, ['name', genre])
-          if (ix < 0) {
-            genres.push({'name': genre, 'count': 1})
-          } else {
-            genres[ix].count++
-          }
-        })
-      })
-      return genres
-    }
   },
   computed: {
     ...mapState(['seenlist', 'wishlist']),
     seenlistGenres: function () {
-      return this.getGenres(this.seenlist)
+      return getMovieListGenres(this.seenlist)
     },
     wishlistGenres: function () {
-      return this.getGenres(this.wishlist)
+      return getMovieListGenres(this.wishlist)
     }
   }
 }
