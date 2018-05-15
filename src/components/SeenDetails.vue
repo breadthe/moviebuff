@@ -80,6 +80,7 @@
 import moment from 'moment'
 import Datepicker from 'vuejs-datepicker'
 import VueTimepicker from 'vue2-timepicker'
+import google from 'google'
 
 export default {
   name: 'SeenDetails',
