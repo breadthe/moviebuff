@@ -8,12 +8,17 @@
               <div class="media">
                 <div class="media-left">
                   <figure class="image is-128x128">
-                    <img :src="movie.Poster" alt="Placeholder image">
+                    <section class="content">
+                      <img :src="movie.Poster" :alt="movie.Title">
+                    </section>
+                    <section class="content">
+                      <p class="is-size-7"><strong>IMDB Rating:</strong> {{movie.imdbRating}}</p>
+                      <p class="is-size-7"><strong>Metascore:</strong> {{movie.Metascore}}</p>
+                    </section>
                   </figure>
                 </div>
                 <div class="media-content">
-                  <p class="title is-4">{{movie.Title}}</p>
-                  <p class="subtitle is-6">{{movie.Year}}</p>
+                  <p><span class="title is-4 has-text-black">{{movie.Title}}</span> <span class="is-7 has-text-grey">({{movie.Year}})</span></p>
                   <p>{{movie.Runtime}}</p>
                   <p>{{movie.Genre}}</p>
                   <br>
