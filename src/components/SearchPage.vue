@@ -28,6 +28,7 @@
               <div class="movie-title">
                 {{movie.Title}} ({{movie.Year}})
                 <div class="action-buttons">
+
                   <button
                     class="button"
                     :class="{'is-success': isInSeenlist(movie.imdbID)}"
@@ -39,17 +40,29 @@
                       aria-hidden="true"
                     ></i>&nbsp;Seen
                   </button>
+
                   <button
-                    v-if="!isInSeenlist(movie.imdbID)"
+                    v-if="!isInSeenlist(movie.imdbID) && !isInWishlist(movie.imdbID)"
                     class="button"
-                    :class="{'is-warning': isInWishlist(movie.imdbID)}"
                     @click="addToWishlist(movie.imdbID)"
                   >
                     <i class="fa"
-                      :class="{'fa-circle-o-notch fa-spin': addingToWishlist === movie.imdbID, 'fa-heart': addingToWishlist !== movie.imdbID && isInWishlist(movie.imdbID), 'fa-heart-o': addingToWishlist !== movie.imdbID && !isInWishlist(movie.imdbID)}"
+                      :class="{'fa-circle-o-notch fa-spin': addingToWishlist === movie.imdbID, 'fa-heart-o': addingToWishlist !== movie.imdbID}"
                       aria-hidden="true"
                     ></i>&nbsp;Wishlist
                   </button>
+
+                  <button
+                    v-if="!isInSeenlist(movie.imdbID) && isInWishlist(movie.imdbID)"
+                    class="button is-warning"
+                    @click="removeFromWishlist(movie.imdbID)"
+                  >
+                    <i class="fa"
+                      :class="{'fa-circle-o-notch fa-spin': addingToWishlist === movie.imdbID, 'fa-heart': addingToWishlist !== movie.imdbID}"
+                      aria-hidden="true"
+                    ></i>&nbsp;Wishlist
+                  </button>
+
                 </div>
               </div>
             </div>
@@ -145,6 +158,9 @@ export default {
         store.dispatch('addToWishlist', movie)
       }
       this.addingToWishlist = false
+    },
+    removeFromWishlist: function (imdbID) {
+      store.dispatch('removeFromWishlist', imdbID)
     },
     isInWishlist: function (imdbID) {
       const ix = _.findIndex(this.wishlist, ['imdbID', imdbID])
