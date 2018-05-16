@@ -19,6 +19,7 @@
                   <div class="navbar-start">
                     <router-link class="navbar-item" :class="{'is-selected': this.$route.name === 'Seen'}" to="/seen" append>Seen</router-link>
                     <router-link class="navbar-item" :class="{'is-selected': this.$route.name === 'Wishlist'}" to="/wishlist" append>Wishlist</router-link>
+                    <router-link class="navbar-item" to="/settings" append><i class="fa fa-gear fa-lg"></i></router-link>
                   </div>
                 </div>
       </div>

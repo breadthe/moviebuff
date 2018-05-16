@@ -4,6 +4,7 @@ import DashboardPage from '@/components/DashboardPage'
 import SeenPage from '@/components/SeenPage'
 import WishlistPage from '@/components/WishlistPage'
 import SearchPage from '@/components/SearchPage'
+import SettingsPage from '@/components/SettingsPage'
 
 Vue.use(Router)
 
@@ -28,6 +29,11 @@ export default new Router({
       path: '/search',
       name: 'Search',
       component: SearchPage
+    },
+    {
+      path: '/settings',
+      name: 'Settings',
+      component: SettingsPage
     }
   ]
 })
