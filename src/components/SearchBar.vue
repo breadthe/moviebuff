@@ -8,7 +8,6 @@
           <i class="fa fa-fw" :class="{'fa-circle-o-notch fa-spin': isSearching, 'fa-search': !isSearching}"></i>
         </a>
       </div>
-
     </div>
 </template>
 
@@ -41,9 +40,7 @@ export default {
   },
   watch: {
     '$route' (to, from) {
-      // if (from.name === 'Search' && to.name !== 'Search') {
       this.searchString = ''
-      // }
     }
   }
 }
