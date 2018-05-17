@@ -74,7 +74,7 @@
       <div class="modal-card">
         <header class="modal-card-head">
           <p class="modal-card-title">Restore Data</p>
-          <button class="delete" aria-label="close"></button>
+          <button class="delete" aria-label="close" @click="restoreConfirm = false"></button>
         </header>
         <section class="modal-card-body">
           <p>Are you sure you want to restore the data from <strong>{{importedFileName}}</strong>? This will overwrite your existing data.</p>

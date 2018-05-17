@@ -1,7 +1,7 @@
 <template>
   <div class="">
     <section class="section">
-      <h1 class="title is-2">Seen Movies</h1>
+      <h1 class="title is-2">Seen List</h1>
     </section>
     <section class="container movie-grid" v-if="seenlist.length">
       <movie-item
@@ -13,7 +13,7 @@
       ></movie-item>
     </section>
     <section class="container has-text-centered" v-else>
-      You don't have any movies in your wishlist
+      You don't have any movies in your seen list
     </section>
   </div>
 </template>
