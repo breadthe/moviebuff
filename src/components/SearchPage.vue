@@ -7,19 +7,30 @@
 
       <div class="column">
         <div class="movie-results" v-if="searchResults">
-            <div>
-              Showing <strong>{{resultsRange.from}}</strong>-<strong>{{resultsRange.to}}</strong> of <strong>{{totalResults}}</strong> total results for <strong>"{{searchString}}"</strong>
+
+            <div class="level">
+              <div class="level-left">
+                <div class="level-item">
+                  <div class="pagination-wrapper" v-if="numberOfPages > 1">
+                    <router-link class="button is-light" :class="{'is-static': page === 1}" :disabled="page === 1" :to="previousPage" append>
+                      <i class="fa fa-arrow-left"></i>
+                    </router-link>
+                    &nbsp;
+                    <router-link class="button is-light" :class="{'is-static': page === numberOfPages}" :disabled="page === numberOfPages" :to="nextPage" append>
+                      <i class="fa fa-arrow-right"></i>
+                    </router-link>
+                  </div>
+                </div>
+              </div>
+              <div class="level-right">
+                <div class="level-item">
+                  Showing&nbsp;<strong>{{resultsRange.from}}</strong>-<strong>{{resultsRange.to}}</strong>&nbsp;of&nbsp;<strong>{{totalResults}}</strong>&nbsp;total results&nbsp;for&nbsp;<strong>"{{searchString}}"</strong>
+                </div>
+              </div>
             </div>
-            <div class="pagination-wrapper" v-if="numberOfPages > 1">
-              <router-link class="button is-light" :class="{'is-static': page === 1}" :disabled="page === 1" :to="previousPage" append>
-                <i class="fa fa-arrow-left"></i>
-              </router-link>
-              &nbsp;
-              <router-link class="button is-light" :class="{'is-static': page === numberOfPages}" :disabled="page === numberOfPages" :to="nextPage" append>
-                <i class="fa fa-arrow-right"></i>
-              </router-link>
-            </div>
+
             <hr>
+
             <div v-for="movie in searchResults" :key="movie.imdbID" class="movie-item">
               <div class="left-side">
                 <img :src="movie.Poster" v-if="movie.Poster && movie.Poster != 'N/A'">
@@ -67,6 +78,29 @@
                 </div>
               </div>
             </div>
+
+            <hr>
+            <div class="level">
+              <div class="level-left">
+                <div class="level-item">
+                  <div class="pagination-wrapper" v-if="numberOfPages > 1">
+                    <router-link class="button is-light" :class="{'is-static': page === 1}" :disabled="page === 1" :to="previousPage" append>
+                      <i class="fa fa-arrow-left"></i>
+                    </router-link>
+                    &nbsp;
+                    <router-link class="button is-light" :class="{'is-static': page === numberOfPages}" :disabled="page === numberOfPages" :to="nextPage" append>
+                      <i class="fa fa-arrow-right"></i>
+                    </router-link>
+                  </div>
+                </div>
+              </div>
+              <div class="level-right">
+                <div class="level-item">
+                  Showing&nbsp;<strong>{{resultsRange.from}}</strong>-<strong>{{resultsRange.to}}</strong>&nbsp;of&nbsp;<strong>{{totalResults}}</strong>&nbsp;total results&nbsp;for&nbsp;<strong>"{{searchString}}"</strong>
+                </div>
+              </div>
+            </div>
+
         </div>
 
         <div v-else>
