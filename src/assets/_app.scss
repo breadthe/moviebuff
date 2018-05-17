@@ -45,25 +45,25 @@ h1, h2 {
         width: 100%;
         display: table;
         margin-bottom: 20px;
-        .movie-title {
+        .left-side {
+            display: table-cell;
+            width: 100px;
+            height: 110px;
+            img {
+                max-height: 110px;
+                max-width: 110px;
+            }
+        }
+        .right-side {
             display: table-cell;
             padding-left: 10px;
             font-size: 20px;
             vertical-align: top;
-        }
-        .movie-poster {
-            display: table-cell;
-            width: 100px;
-            height: 100px;
-            img {
-                max-height: 100px;
-                max-width: 100px;
+            .action-buttons {
+                margin-top: 10px;
+                // display: table-cell;
+                // text-align: right;
             }
-        }
-        .action-buttons {
-            margin-top: 10px;
-            // display: table-cell;
-            // text-align: right;
         }
     }
 }

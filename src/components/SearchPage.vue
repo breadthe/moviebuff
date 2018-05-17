@@ -21,12 +21,13 @@
             </div>
             <hr>
             <div v-for="movie in searchResults" :key="movie.imdbID" class="movie-item">
-              <div class="movie-poster">
+              <div class="left-side">
                 <img :src="movie.Poster" v-if="movie.Poster && movie.Poster != 'N/A'">
                 <img src="http://via.placeholder.com/75x100?text=NO+IMAGE" v-else>
               </div>
-              <div class="movie-title">
-                {{movie.Title}} ({{movie.Year}})
+              <div class="right-side">
+                <div class="movie-year is-size-6">{{movie.Year}}</div>
+                <div class="movie-title is-size-4 has-text-black">{{movie.Title}}</div>
                 <div class="action-buttons">
 
                   <button
