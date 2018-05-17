@@ -12,8 +12,26 @@
                       <img :src="movie.Poster" :alt="movie.Title">
                     </section>
                     <section class="content ratings">
-                      <div class="is-size-7"><strong>IMDB Rating:</strong> {{movie.imdbRating}}</div>
-                      <div class="is-size-7"><strong>Metascore:</strong> {{movie.Metascore}}</div>
+                      <div class="is-size-7">
+                        <strong>IMDB Rating:</strong>&nbsp;
+                        <span class="has-text-weight-bold" :class="{
+                          'has-text-success': movie.imdbRating >= 7,
+                          'has-text-warning': movie.imdbRating < 7 && movie.imdbRating >= 5,
+                          'has-text-danger': movie.imdbRating < 5
+                        }">
+                          {{movie.imdbRating}}
+                        </span>
+                      </div>
+                      <div class="is-size-7">
+                        <strong>Metascore:</strong>&nbsp;
+                        <span class="has-text-weight-bold" :class="{
+                          'has-text-success': movie.Metascore >= 70,
+                          'has-text-warning': movie.Metascore < 70 && movie.Metascore >= 50,
+                          'has-text-danger': movie.Metascore < 50
+                        }">
+                          {{movie.Metascore}}
+                        </span>
+                      </div>
                     </section>
                   </figure>
                 </div>
