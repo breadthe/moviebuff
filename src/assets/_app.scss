@@ -75,8 +75,9 @@ h1, h2 {
         float: left;
         position: relative;
         text-align: center;
-        margin: 10px;
+        margin: 0 10px 30px 10px;
         width: 168px;
+        height: 350px;
         &:hover {
             cursor: pointer;
             box-shadow: 0 0 0 1px rgba(0,0,0,.1),0 2px 4px 1px rgba(0,0,0,.18);
@@ -107,8 +108,10 @@ h1, h2 {
                 max-width: 168px;
             }
         }
-        .movie-title {
-            padding: 5px;
+        .movie-title-year {
+            .movie-title {
+                padding: 0 5px;
+            }
         }
     }
 }

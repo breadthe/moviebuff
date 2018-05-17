@@ -18,9 +18,9 @@
       <div class="movie-poster">
         <img :src="movie.Poster" @click="detailsIsOpen = true">
       </div>
-      <div @click="detailsIsOpen = true">
+      <div class="movie-title-year" @click="detailsIsOpen = true">
         <div class="movie-title">{{movie.Title}}</div>
-        <div>{{movie.Year}}</div>
+        <div class="movie-year">{{movie.Year}}</div>
       </div>
 
       <movie-details :movie="movie" :details-is-open="detailsIsOpen" @closeDetails="detailsIsOpen = false"></movie-details>
