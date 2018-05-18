@@ -1,23 +1,30 @@
 <template>
-<div class="level">
-  <div class="level-left">
+<div class="level is-mobile">
+
     <div class="level-item">
-      <div class="pagination-wrapper" v-if="numberOfPages > 1">
-        <router-link class="button is-light" :class="{'is-static': page === 1}" :disabled="page === 1" :to="previousPage" append>
-          <i class="fa fa-arrow-left"></i>
+        <router-link class="button is-light" :class="{'is-static': page === 1}" :disabled="page === 1" :to="firstPageUrl" append>
+          <i class="fa fa-step-backward"></i>
         </router-link>
         &nbsp;
-        <router-link class="button is-light" :class="{'is-static': page === numberOfPages}" :disabled="page === numberOfPages" :to="nextPage" append>
-          <i class="fa fa-arrow-right"></i>
+        <router-link class="button is-light" :class="{'is-static': page === 1}" :disabled="page === 1" :to="previousPageUrl" append>
+          <i class="fa fa-caret-left fa-lg"></i>
         </router-link>
-      </div>
     </div>
-  </div>
-  <div class="level-right">
+
     <div class="level-item">
-      Showing&nbsp;<strong>{{resultsRange.from}}</strong>-<strong>{{resultsRange.to}}</strong>&nbsp;of&nbsp;<strong>{{totalResults}}</strong>&nbsp;total results&nbsp;for&nbsp;<strong>"{{searchString}}"</strong>
+        <strong>{{resultsRange.from}}</strong>-<strong>{{resultsRange.to}}</strong>&nbsp;of&nbsp;<strong>{{totalResults}}</strong>&nbsp;results&nbsp;for&nbsp;<strong>"{{searchString}}"</strong>
     </div>
-  </div>
+
+    <div class="level-item">
+        <router-link class="button is-light" :class="{'is-static': page === numberOfPages}" :disabled="page === numberOfPages" :to="nextPageUrl" append>
+          <i class="fa fa-caret-right fa-lg"></i>
+        </router-link>
+        &nbsp;
+        <router-link class="button is-light" :class="{'is-static': page === numberOfPages}" :disabled="page === numberOfPages" :to="lastPageUrl" append>
+          <i class="fa fa-step-forward"></i>
+        </router-link>
+    </div>
+
 </div>
 </template>
 
@@ -39,14 +46,6 @@ export default {
       required: true,
       default: 1
     },
-    'previous-page': {
-      type: String,
-      required: true
-    },
-    'next-page': {
-      type: String,
-      required: true
-    },
     'results-range': {
       type: Object,
       required: true
@@ -54,6 +53,30 @@ export default {
     'total-results': {
       type: Number,
       required: true
+    }
+  },
+  computed: {
+    firstPageUrl: function () {
+      return '/search?q=' + `${this.searchString}` + '&page=1'
+    },
+    lastPageUrl: function () {
+      return '/search?q=' + `${this.searchString}` + '&page=' + this.numberOfPages
+    },
+    previousPageUrl: function () {
+      let previousPage = this.page
+      previousPage--
+      if (previousPage < 1) {
+        return this.firstPageUrl
+      }
+      return '/search?q=' + `${this.searchString}` + '&page=' + previousPage
+    },
+    nextPageUrl: function () {
+      let nextPage = this.page
+      nextPage++
+      if (nextPage > this.numberOfPages) {
+        return this.lastPageUrl
+      }
+      return '/search?q=' + `${this.searchString}` + '&page=' + nextPage
     }
   }
 }

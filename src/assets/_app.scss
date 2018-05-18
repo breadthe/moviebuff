@@ -38,6 +38,9 @@ h1, h2 {
 .movie-results {
     width: 100%;
     position: relative;
+    hr {
+        margin: 1rem 0;
+    }
     .movie-item {
         width: 100%;
         display: table;

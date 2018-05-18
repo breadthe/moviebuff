@@ -12,8 +12,6 @@
               :search-string="searchString"
               :number-of-pages="numberOfPages"
               :page="page"
-              :previous-page="previousPage"
-              :next-page="nextPage"
               :results-range="resultsRange"
               :total-results="totalResults"
             />
@@ -72,8 +70,6 @@
               :search-string="searchString"
               :number-of-pages="numberOfPages"
               :page="page"
-              :previous-page="previousPage"
-              :next-page="nextPage"
               :results-range="resultsRange"
               :total-results="totalResults"
             />
@@ -195,22 +191,6 @@ export default {
         from: from,
         to: to
       }
-    },
-    previousPage: function () {
-      let previousPage = this.page
-      previousPage--
-      if (previousPage < 1) {
-        return '/search?q=' + `${this.searchString}` + '&page=1'
-      }
-      return '/search?q=' + `${this.searchString}` + '&page=' + previousPage
-    },
-    nextPage: function () {
-      let nextPage = this.page
-      nextPage++
-      if (nextPage > this.numberOfPages) {
-        return '/search?q=' + `${this.searchString}` + '&page=' + this.numberOfPages
-      }
-      return '/search?q=' + `${this.searchString}` + '&page=' + nextPage
     }
   },
   created: function () {
