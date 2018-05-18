@@ -6,29 +6,17 @@
       </div>
 
       <div class="column">
-        <div class="movie-results" v-if="searchResults">
+          <div class="movie-results" v-if="searchResults">
 
-            <div class="level">
-              <div class="level-left">
-                <div class="level-item">
-                  <div class="pagination-wrapper" v-if="numberOfPages > 1">
-                    <router-link class="button is-light" :class="{'is-static': page === 1}" :disabled="page === 1" :to="previousPage" append>
-                      <i class="fa fa-arrow-left"></i>
-                    </router-link>
-                    &nbsp;
-                    <router-link class="button is-light" :class="{'is-static': page === numberOfPages}" :disabled="page === numberOfPages" :to="nextPage" append>
-                      <i class="fa fa-arrow-right"></i>
-                    </router-link>
-                  </div>
-                </div>
-              </div>
-              <div class="level-right">
-                <div class="level-item">
-                  Showing&nbsp;<strong>{{resultsRange.from}}</strong>-<strong>{{resultsRange.to}}</strong>&nbsp;of&nbsp;<strong>{{totalResults}}</strong>&nbsp;total results&nbsp;for&nbsp;<strong>"{{searchString}}"</strong>
-                </div>
-              </div>
-            </div>
-
+            <pagination-controls
+              :search-string="searchString"
+              :number-of-pages="numberOfPages"
+              :page="page"
+              :previous-page="previousPage"
+              :next-page="nextPage"
+              :results-range="resultsRange"
+              :total-results="totalResults"
+            />
             <hr>
 
             <div v-for="movie in searchResults" :key="movie.imdbID" class="movie-item">
@@ -80,26 +68,15 @@
             </div>
 
             <hr>
-            <div class="level">
-              <div class="level-left">
-                <div class="level-item">
-                  <div class="pagination-wrapper" v-if="numberOfPages > 1">
-                    <router-link class="button is-light" :class="{'is-static': page === 1}" :disabled="page === 1" :to="previousPage" append>
-                      <i class="fa fa-arrow-left"></i>
-                    </router-link>
-                    &nbsp;
-                    <router-link class="button is-light" :class="{'is-static': page === numberOfPages}" :disabled="page === numberOfPages" :to="nextPage" append>
-                      <i class="fa fa-arrow-right"></i>
-                    </router-link>
-                  </div>
-                </div>
-              </div>
-              <div class="level-right">
-                <div class="level-item">
-                  Showing&nbsp;<strong>{{resultsRange.from}}</strong>-<strong>{{resultsRange.to}}</strong>&nbsp;of&nbsp;<strong>{{totalResults}}</strong>&nbsp;total results&nbsp;for&nbsp;<strong>"{{searchString}}"</strong>
-                </div>
-              </div>
-            </div>
+            <pagination-controls
+              :search-string="searchString"
+              :number-of-pages="numberOfPages"
+              :page="page"
+              :previous-page="previousPage"
+              :next-page="nextPage"
+              :results-range="resultsRange"
+              :total-results="totalResults"
+            />
 
         </div>
 
@@ -130,11 +107,13 @@ import axios from 'axios'
 import _ from 'lodash'
 import { mapState } from 'vuex'
 import SeenDetails from '@/components/SeenDetails'
+import PaginationControls from '@/components/PaginationControls'
 
 export default {
   name: 'SearchPage',
   components: {
-    'seen-details': SeenDetails
+    'seen-details': SeenDetails,
+    'pagination-controls': PaginationControls
   },
   data () {
     return {
@@ -160,7 +139,7 @@ export default {
       const results = await axios.get('http://www.omdbapi.com/?&apikey=' + `${this.apikey}` + '&type=movie&s=' + `${this.searchString}` + '&page=' + `${this.page}`)
       await store.dispatch('toggleSearching', false)
       if (results.data) {
-        this.totalResults = results.data.totalResults
+        this.totalResults = parseInt(results.data.totalResults, 10)
         this.numberOfPages = parseInt(Math.ceil(this.totalResults / this.resultsPerPage), 10)
         this.searchResults = results.data.Search
       }
