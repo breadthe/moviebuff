@@ -114,7 +114,7 @@ export default {
   data () {
     return {
       searchString: '',
-      searchResults: [],
+      searchResults: null,
       totalResults: 0,
       resultsPerPage: 10,
       numberOfPages: 0,
@@ -132,12 +132,14 @@ export default {
       store.dispatch('toggleSearching', true)
       this.searchString = this.$route.query.q
       this.page = parseInt(this.$route.query.page || 1, 10)
-      const results = await axios.get('http://www.omdbapi.com/?&apikey=' + `${this.apikey}` + '&type=movie&s=' + `${this.searchString}` + '&page=' + `${this.page}`)
-      await store.dispatch('toggleSearching', false)
-      if (results.data) {
-        this.totalResults = parseInt(results.data.totalResults, 10)
-        this.numberOfPages = parseInt(Math.ceil(this.totalResults / this.resultsPerPage), 10)
-        this.searchResults = results.data.Search
+      if (this.searchString) {
+        const results = await axios.get('http://www.omdbapi.com/?&apikey=' + `${this.apikey}` + '&type=movie&s=' + `${this.searchString}` + '&page=' + `${this.page}`)
+        await store.dispatch('toggleSearching', false)
+        if (results.data) {
+          this.totalResults = parseInt(results.data.totalResults, 10)
+          this.numberOfPages = parseInt(Math.ceil(this.totalResults / this.resultsPerPage), 10)
+          this.searchResults = results.data.Search
+        }
       }
     },
     openSeenDetails: async function (imdbID) {

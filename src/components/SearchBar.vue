@@ -40,7 +40,17 @@ export default {
   },
   watch: {
     '$route' (to, from) {
-      this.searchString = ''
+      // Clear the search bar only when navigating away from the Search page
+      if (to.name !== 'Search') {
+        this.searchString = ''
+      }
+    }
+  },
+  created: function () {
+    // When searching from a page different than Search, keep the string in the search bar
+    const searchString = this.$router.history.current.query.q
+    if (searchString) {
+      this.searchString = searchString
     }
   }
 }
