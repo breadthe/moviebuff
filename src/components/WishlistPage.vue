@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="wishlist-page">
     <section class="section">
       <h1 class="title is-2">Wishlist</h1>
     </section>

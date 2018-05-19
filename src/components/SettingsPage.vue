@@ -1,5 +1,5 @@
 <template>
-  <section class="section">
+  <section class="section settings-page">
     <h1 class="title is-2">Settings</h1>
     <!-- <br> -->
 

@@ -12,7 +12,7 @@
     </div>
 
     <div class="level-item">
-        <strong>{{resultsRange.from}}</strong>-<strong>{{resultsRange.to}}</strong>&nbsp;of&nbsp;<strong>{{totalResults}}</strong>&nbsp;results&nbsp;for&nbsp;<strong>"{{searchString}}"</strong>
+        Showing&nbsp;<strong>{{resultsRange.from}}</strong>-<strong>{{resultsRange.to}}</strong>&nbsp;of&nbsp;<strong>{{totalResults}}</strong>
     </div>
 
     <div class="level-item">

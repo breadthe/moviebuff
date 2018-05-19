@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class="seen-page">
     <section class="section">
       <h1 class="title is-2">Seen List</h1>
     </section>

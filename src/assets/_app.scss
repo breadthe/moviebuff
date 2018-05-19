@@ -6,6 +6,16 @@ h1, h2 {
     }
 }
 
+/* Overwrite top/bottom section padding */
+.dashboard .section,
+.seen-page .section,
+.wishlist-page .section,
+.section.settings-page,
+.section.search-page {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
 .navbar {
     .navbar-item {
         &.is-selected {
