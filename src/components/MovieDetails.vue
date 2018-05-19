@@ -14,7 +14,7 @@
                     <section class="content ratings">
                       <div class="is-size-7">
                         <strong>IMDB Rating:</strong>&nbsp;
-                        <span class="has-text-weight-bold" :class="{
+                        <span class="has-text-weight-bold rating" :class="{
                           'has-text-success': movie.imdbRating >= 7,
                           'has-text-warning': movie.imdbRating < 7 && movie.imdbRating >= 5,
                           'has-text-danger': movie.imdbRating < 5
@@ -24,7 +24,7 @@
                       </div>
                       <div class="is-size-7">
                         <strong>Metascore:</strong>&nbsp;
-                        <span class="has-text-weight-bold" :class="{
+                        <span class="has-text-weight-bold rating" :class="{
                           'has-text-success': movie.Metascore >= 70,
                           'has-text-warning': movie.Metascore < 70 && movie.Metascore >= 50,
                           'has-text-danger': movie.Metascore < 50
