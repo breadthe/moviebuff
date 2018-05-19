@@ -1,12 +1,7 @@
 <template>
     <div class="field has-addons">
-      <div class="control is-expanded">
-        <input class="input" type="text" placeholder="Find a movie" v-model="searchString" @keyup.enter="searchMovie">
-      </div>
-      <div class="control">
-        <a class="button is-info" @click="searchMovie" :disabled="!searchString.length">
-          <i class="fa fa-fw" :class="{'fa-circle-o-notch fa-spin': isSearching, 'fa-search': !isSearching}"></i>
-        </a>
+      <div class="control is-expanded" :class="{'is-loading': isSearching}">
+        <input class="input is-medium" type="text" placeholder="Find a movie" v-model="searchString" @keyup.enter="searchMovie">
       </div>
     </div>
 </template>
@@ -58,4 +53,22 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.control input {
+  border-left: none;
+  border-right: none;
+  padding-left: 5vw;
+  padding-right: 5vw;
+}
+/* @media screen and (min-width: 641px) {
+  .control input {
+    padding-left: 5vw;
+    padding-right: 5vw;
+  }
+}
+@media screen and (max-width: 640px) {
+  .control input {
+    padding-left: 10vw;
+    padding-right: 10vw;
+  }
+} */
 </style>

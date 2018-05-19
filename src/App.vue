@@ -1,6 +1,7 @@
 <template>
     <div id="app">
             <the-header></the-header>
+            <search-bar></search-bar>
 
             <div class="container is-fluid">
               <router-view></router-view>
@@ -12,12 +13,14 @@
 
 <script>
 import TheHeader from '@/components/TheHeader'
+import SearchBar from '@/components/SearchBar'
 import store from '@/store'
 
 export default {
   name: 'App',
   components: {
-    'the-header': TheHeader
+    'the-header': TheHeader,
+    'search-bar': SearchBar
   },
   data: function () {
     return {
