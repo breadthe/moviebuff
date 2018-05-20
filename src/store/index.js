@@ -28,6 +28,17 @@ const mutations = {
       state.seenlist = JSON.parse(window.localStorage.getItem('seenlist')) || []
     }
   },
+  UPDATE_SEENLIST: (state, metaObj) => {
+    const imdbID = metaObj.imdbID
+    const meta = metaObj.meta
+    const seenlist = state.seenlist
+    const ix = _.findIndex(seenlist, ['imdbID', imdbID])
+    if (ix >= 0) {
+      seenlist[ix].meta = meta
+      window.localStorage.setItem('seenlist', JSON.stringify(seenlist))
+      state.seenlist = JSON.parse(window.localStorage.getItem('seenlist')) || []
+    }
+  },
   REMOVE_FROM_SEENLIST: (state, imdbID) => {
     const seenlist = state.seenlist
     // If the movie is in the seenlist, remove it
@@ -89,6 +100,9 @@ const actions = {
   addToSeenlist ({ commit }, movie) {
     commit('ADD_TO_SEENLIST', movie)
     commit('REMOVE_FROM_WISHLIST', movie.imdbID)
+  },
+  updateSeenlist ({ commit }, metaObj) {
+    commit('UPDATE_SEENLIST', metaObj)
   },
   removeFromSeenlist ({ commit }, imdbID) {
     commit('REMOVE_FROM_SEENLIST', imdbID)

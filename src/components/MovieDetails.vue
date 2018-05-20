@@ -47,10 +47,21 @@
                   <p>{{movie.Plot}}</p>
                   <section v-if="movie.meta">
                     <hr>
-                    <p v-if="movie.meta.theater"><strong>Theater:</strong> {{movie.meta.theater}}</p>
-                    <p v-if="movie.meta.date"><strong>Seen on:</strong> {{formatDate(movie.meta.date)}} <span v-if="movie.meta.showTime"><strong>at</strong> {{formatTime(movie.meta.showTime)}}</span></p>
-                    <p v-if="movie.meta.ticketPrice"><strong>Ticket price:</strong> ${{movie.meta.ticketPrice}}</p>
-                    <p v-if="movie.meta.isMoviePass"><span class="tag is-danger">MoviePass</span></p>
+                    <section v-if="editMetaIsOpen">
+                      <edit-meta
+                        :imdb-id="movie.imdbID"
+                        :meta="movie.meta"
+                        @closeEditMeta="editMetaIsOpen = false"
+                      ></edit-meta>
+                    </section>
+                    <section v-else>
+                      <a @click="editMetaIsOpen = true">Edit</a>
+                      <p v-if="movie.meta.theater"><strong>Theater:</strong> {{movie.meta.theater}}</p>
+                      <p v-if="movie.meta.date"><strong>Seen on:</strong> {{formatDate(movie.meta.date)}} <span v-if="movie.meta.showTime"><strong>at</strong> {{formatTime(movie.meta.showTime)}}</span></p>
+                      <p v-if="movie.meta.ticketPrice"><strong>Ticket price:</strong> ${{movie.meta.ticketPrice}}</p>
+                      <p v-if="movie.meta.isMoviePass"><span class="tag is-danger">MoviePass</span></p>
+                    </section>
+
                   </section>
                 </div>
               </div>
@@ -65,9 +76,13 @@
 <script>
 import moment from 'moment'
 import { getMovieGenres } from '@/utils'
+import EditMeta from '@/components/EditMeta'
 
 export default {
   name: 'MovieDetails',
+  components: {
+    'edit-meta': EditMeta
+  },
   props: {
     'movie': {
       type: Object,
@@ -80,6 +95,7 @@ export default {
   },
   data () {
     return {
+      editMetaIsOpen: false
     }
   },
   methods: {
