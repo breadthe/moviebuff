@@ -16,10 +16,20 @@ const getMovieListGenres = function (list) {
       }
     })
   })
-  return genres
+  return _.sortBy(genres, ['count']).reverse()
+}
+
+const getRandomColor = function () {
+  var letters = '0123456789ABCDEF'
+  var color = '#'
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)]
+  }
+  return color
 }
 
 export {
   getMovieGenres,
-  getMovieListGenres
+  getMovieListGenres,
+  getRandomColor
 }
