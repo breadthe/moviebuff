@@ -2,6 +2,8 @@
 
 > Vue movie tracking app
 
+Migrated to Github @v0.2
+
 ## Build Setup
 
 ``` bash
