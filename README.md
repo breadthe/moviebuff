@@ -1,8 +1,16 @@
 # movie-buff
 
+*Migrated from GitLab @v0.2*
+
 > Vue movie tracking app
 
-Migrated to Github @v0.2
+Live demo: [http://moviebuff.surge.sh/](http://moviebuff.surge.sh/)
+
+- Search for movies and save them to a wish-or-seen list.
+- Mark wishlist movies as seen.
+- Add additional metadata to movies in the seen list, such as movie theatre, date and time, ticket price, etc.
+- View details for individual movies.
+- Since the data is stored in your browser window, you can export it as JSON and later import it.
 
 ## Build Setup
 
